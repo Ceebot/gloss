@@ -12,10 +12,7 @@
 
         <div v-if="isShowLog" class="log case">
             <form @submit.prevent="useFetch" class="log__content animate">
-                <!--<div class="log__content-top">-->
-                <!--<span @click="toggleLogAdmin" class="log__close" title="Закрыть окно">x</span>-->
                 <h2 class="log__heading">Вход от администратора</h2>
-                <!--</div>-->
                 <div class="log__container">
                     <label for="login">Логин</label>
                     <input class="log__input"
@@ -35,7 +32,7 @@
                     </div>
                     <div class="pass__false message" v-if="message">{{ message }}</div>
                 </div>
-                <div class="center-btn">
+                <div class="text-center">
                     <button @click="toggleLogAdmin" class="close">Закрыть</button>
                 </div>
             </form>
@@ -93,32 +90,28 @@ export default {
         },
 
         async useFetch() {
+            this.isButtonDisabled = true;
             this.loading = true;
             this.message = '';
-            this.isButtonDisabled = true;
 
             const params = new URLSearchParams();
             params.set('login', this.login);
             params.set('password', this.password);
 
-            fetch('php/check-log.php', {
+            let responce =  await fetch('php/check-log.php', {
                 method: 'POST',
                 body: params
-            }).then(
-                response => {
-                    return response.text();
-                },
-            ).then(
-                text => {
-                    if (text === 'Успешный_вход!')
-                        location.href = 'admin.php';
-                    else {
-                        this.message = text;
-                        this.loading = false;
-                        this.isButtonDisabled = false;
-                    }
-                }
-            );
+            });
+
+            let text = await responce.text();
+
+            if (text === 'success')
+                location.href = 'admin.php';
+            else {
+                this.message = text;
+                this.loading = false;
+                this.isButtonDisabled = false;
+            }
         }
     }
 }

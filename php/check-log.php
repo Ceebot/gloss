@@ -13,4 +13,4 @@ if (count($user) == 0) {
 }
 
 $_SESSION['user'] = $user['id'];
-echo 'Успешный_вход!';
+echo 'success';

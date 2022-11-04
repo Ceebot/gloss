@@ -21,7 +21,7 @@ require_once 'php/header.php' ?>
     </div>
 </section>
 
-<section class="do" id="do">
+<section class="do" id="section-do">
     <div class="container">
         <h2 class="section-heading text-center">
             Товары и услуги
@@ -31,8 +31,6 @@ require_once 'php/header.php' ?>
         </p>
         <ul class="do__list-services">
             <?
-            require "php/connect.php";
-            /** @var $mysql */
             $services = [];
             $items = $mysql->query("SELECT * FROM service");
             while ($service = $items->fetch_assoc()) {
@@ -138,7 +136,20 @@ require_once 'php/header.php' ?>
     </div>
 </section>
 
-<?= vueTag('vue-application', ['services' => $services]) ?>
-
 <?
+echo vueTag('vue-application', ['services' => $services]);
+
+$reviews = [];
+$results = $mysql->query("SELECT * FROM review ORDER BY id DESC");
+for ($i = 0; $i < 3; $i++) {
+    $review = $results->fetch_assoc();
+    $reviews[] = [
+        'id' => $review['id'],
+        'name' => limitSymbol($review['name'], 64),
+        'message' => limitSymbol($review['review'], 255)
+    ];
+}
+
+echo vueTag("vue-popup-review", ['initReviews' => $reviews]);
+
 require_once 'php/footer.php' ?>

@@ -1,11 +1,9 @@
 <template>
-    <div>
-        <div v-if="returnMessage" class="check-mark case">
-            <div class="check-mark__content animate">
-                <img class="check-mark__img" src="img/check-mark.png" alt="Галочка">
-                <h1 class="section-heading text-center">{{ returnMessage }}</h1>
-                <a class="check-mark__close btn" @click="toggleMark">Закрыть</a>
-            </div>
+    <div v-if="returnMessage" class="check-mark case">
+        <div class="check-mark__content animate">
+            <img class="check-mark__img" src="img/check-mark.png" alt="Галочка">
+            <h1 class="section-heading text-center">Отправлено!</h1>
+            <a class="check-mark__close btn" @click="toggleMark">Закрыть</a>
         </div>
     </div>
 </template>
@@ -14,6 +12,7 @@
 
 export default {
     name: "Success",
+
     props: ['returnMessage'],
 
     created() {
@@ -23,6 +22,8 @@ export default {
     methods: {
         toggleMark() {
             this.returnMessage = '';
+            this.$emit('close-popup');
+            console.log('попап закрыт');
         },
 
         windowClose(ev) {
@@ -30,6 +31,7 @@ export default {
 
             if (ev.target === success) {
                 this.returnMessage = '';
+                this.$emit('close-popup');
             }
         }
     }

@@ -17,7 +17,7 @@
                         </a>
                     </li>
                     <li class="footer__nav-item">
-                        <a href="#do" class="footer__nav-link">
+                        <a href="#section-do" class="footer__nav-link">
                             Товары и услуги
                         </a>
                     </li>

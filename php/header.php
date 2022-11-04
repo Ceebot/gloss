@@ -2,6 +2,7 @@
 
 require_once 'php/helper.php';
 require_once 'php/connect.php';
+/** @var $mysql */
 session_start();
 ?>
 
@@ -24,7 +25,7 @@ session_start();
                 <a href="index.php" class="header__link">Главная</a>
             </li>
             <li class="header__item">
-                <a href="#do" class="header__link">Товары и услуги</a>
+                <a href="#section-do" class="header__link">Товары и услуги</a>
             </li>
             <li class="header__item">
                 <a href="#section-contacts" class="header__link">Контакты</a>
@@ -35,7 +36,6 @@ session_start();
 
             <?
             $id = $_SESSION['user'];
-            /** @var $mysql */
             $user = $mysql->query("SELECT * FROM admin WHERE id='$id'")->fetch_assoc();
             $users = [];
             array_push($users, [

@@ -6,7 +6,7 @@
                     <h2 class="section-form__title">
                         Онлайн запись
                     </h2>
-                    <Success ></Success>
+                    <Success></Success>
                     <p class="section-form__description">
                         Здесь вы можете записаться на любую услугу
                     </p>
@@ -38,13 +38,14 @@
 
                         <input type="date"
                                class="section-form__input section-form__input_date"
+                               id="date"
                                v-model="date"
                         >
 
                         <select
                             class="section-form__set-service" v-model="selected">
                             <option disabled value="">Выбрать услугу</option>
-                            <option  v-for="service in services" :key="service.id" :value="service.title">
+                            <option v-for="service in services" :key="service.id" :value="service.title">
                                 {{ service.title }} - {{ service.description }} {{ service.price }} &#8381
                             </option>
                         </select>
@@ -99,16 +100,17 @@ export default {
             isButtonDisabled: false
         }
     },
+
     computed: {
         loadingText() {
-          return this.loading ? '' : 'Оставить заявку';
+            return this.loading ? '' : 'Оставить заявку';
         },
     },
 
     methods: {
         async useFetch() {
-            this.loading = true;
             this.isButtonDisabled = true;
+            this.loading = true;
 
             const params = new URLSearchParams();
             params.set('name', this.name);
@@ -118,30 +120,26 @@ export default {
             params.set('selected', this.selected);
             params.set('message', this.message);
 
-            fetch('php/add/add-application.php', {
+            let response = await fetch('php/add/add-application.php', {
                 method: 'POST',
                 body: params
-            }).then(
-                response => {
-                    return response.text();
-                },
-            ).then(
-                text => {
-                    if (text === 'Отправлено!') {
-                        this.name = '';
-                        this.tel = '';
-                        this.mail = '';
-                        this.date = '';
-                        this.selected = '';
-                        this.message = '';
+            });
 
-                        this.returnMessage = text;
-                        this.loading = false;
-                        this.isButtonDisabled = false;
-                    }
-                }
-            );
-        },
+            let text = await response.text();
+
+            if (text === 'Отправлено!') {
+                this.name = '';
+                this.tel = '';
+                this.mail = '';
+                this.date = '';
+                this.selected = '';
+                this.message = '';
+
+                this.returnMessage = text;
+                this.loading = false;
+                this.isButtonDisabled = false;
+            }
+        }
     }
 }
 </script>
