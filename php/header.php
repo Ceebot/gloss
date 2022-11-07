@@ -19,44 +19,34 @@ session_start();
 </head>
 <body>
 <header class="header">
+
     <div class="container header__container">
-        <ul class="header__list">
-            <li class="header__item">
-                <a href="index.php" class="header__link">Главная</a>
-            </li>
-            <li class="header__item">
-                <a href="#section-do" class="header__link">Товары и услуги</a>
-            </li>
-            <li class="header__item">
-                <a href="#section-contacts" class="header__link">Контакты</a>
-            </li>
-            <li class="header__item">
-                <a href="#section-clients" class="header__link">Отзывы</a>
-            </li>
+        <?
+        $id = $_SESSION['user'];
+        $user = $mysql->query("SELECT * FROM admin WHERE id='$id'")->fetch_assoc();
+        $users[] = [
+            'id' => $user['id'],
+            'firstname' => $user['firstname'],
+            'lastname' => $user['lastname']
+        ];
 
-            <?
-            $id = $_SESSION['user'];
-            $user = $mysql->query("SELECT * FROM admin WHERE id='$id'")->fetch_assoc();
-            $users = [];
-            array_push($users, [
-                'id' => $user['id'],
-                'firstname' => $user['firstname'],
-                'lastname' => $user['lastname']
-            ]) ?>
-            <? if (isset($_SESSION['user']) && $_SESSION['user'] != '') {
-                $session = true;
-            } else {
-                $session = false;
-            }
-            ?>
+        if (isset($_SESSION['user']) && $_SESSION['user'] != '') {
+            $session = true;
+        } else {
+            $session = false;
+        }
 
-            <li class="header__item">
-                <?= vueTag("vue-admin", [
-                    'users' => $users,
-                    'session' => $session
-                ]) ?>
-            </li>
+        $url = $_SERVER['REQUEST_URI'];
+        $url = explode('?', $url);
+        $url = $url[0];
+
+        echo vueTag("vue-header-menu", [
+            'users' => $users,
+            'session' => $session,
+            'url' => $url
+        ]) ?>
         </ul>
+
         <a href="index.php" class="header__logo">
             <img src="img/icon.png" alt="Логотип" class="logo-img">
         </a>

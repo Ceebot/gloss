@@ -29,38 +29,38 @@
 
                     <div class="review__name">
                         <label class="review__label" for="review-name">Ваше имя*</label>
-                        <input v-model="name"
+                        <input required
+                               v-model="name"
                                maxlength="35"
                                class="review__input"
                                id="review-name"
                                type="text"
-                               required
                         >
                     </div>
 
                     <div class="review__mail">
                         <label class="review__label" for="review-mail">Ваш E-Mail* <span class="review__desc">(не отображается на сайте)</span></label>
-                        <input v-model="mail"
+                        <input required
+                               v-model="mail"
                                maxlength="45"
                                class="review__input"
                                id="review-mail"
                                type="email"
-                               required
                         >
                     </div>
 
                     <label class="review__label" for="review-text">Ваш Отзыв*</label>
-                    <textarea v-model="message"
-                              maxlength="420"
+                    <textarea required
+                              v-model="message"
+                              maxlength="500"
                               class="review__textarea"
                               id="review-text"
                               rows="5"
-                              type="text"
-                              required>
+                              type="text">
                     </textarea>
 
                     <div class="text-center">
-                        <button @click="useFetch" :disabled="isButtonDisabled" type="submit"
+                        <button :disabled="isButtonDisabled" type="submit"
                                 class="review__add-review btn">
                             <img v-if="loading" class="loading" src="img/loading.gif" alt="Загрузка">
                             {{ loadingText }}

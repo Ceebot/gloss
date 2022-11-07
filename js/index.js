@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Admin from "./components/Admin.vue";
+import HeaderMenu from "./components/HeaderMenu.vue";
 import Products from "./components/Products.vue";
 import Application from "./components/Application.vue";
 import Reviews from "./components/Reviews.vue";
@@ -24,7 +24,7 @@ function vueInit(vueEl, vueComponent) {
     });
 }
 
-vueInit(document.querySelector('.vue-admin'), Admin);
+vueInit(document.querySelector('.vue-header-menu'), HeaderMenu);
 vueInit(document.querySelector('.vue-popup-products'), Products);
 vueInit(document.querySelector('.vue-application'), Application);
 vueInit(document.querySelector('.vue-popup-review'), Reviews);

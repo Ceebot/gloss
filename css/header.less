@@ -11,23 +11,23 @@
     height: 100%;
   }
 
+  &__menu {
+    height: 70px;
+  }
+
   &__list {
     display: flex;
     align-items: center;
-  }
-
-  &__item:not(:last-child) {
-    margin-right: 70px;
-  }
-
-  &__menu {
-    height: 70px;
   }
 
   &__item {
     line-height: 1;
     font-size: 15px;
     cursor: pointer;
+
+    &:not(:last-child) {
+      margin-right: 70px;
+    }
   }
 
   &__link {
@@ -37,5 +37,14 @@
     &:hover {
       color: #a978dc;
     }
+  }
+
+  &__link_none {
+    color: #1c1c1c;
+    cursor: initial;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 3px;
+    box-shadow: 0 3px 12px;
   }
 }

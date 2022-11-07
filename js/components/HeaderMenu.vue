@@ -1,13 +1,44 @@
 <template>
     <div>
-        <div v-if="session">
-            <a v-for="user in users" :key="user.id" href="/admin.php" class="header__link">
-                Вход: {{ user.firstname }} {{ user.lastname }}
-            </a>
+        <div v-if="url === '/index.php'">
+            <ul class="header__list">
+                <li class="header__item">
+                    <a href="index.php" class="header__link">Главная</a>
+                </li>
+                <li class="header__item">
+                    <a href="#section-do" class="header__link">Товары и услуги</a>
+                </li>
+                <li class="header__item">
+                    <a href="#section-contacts" class="header__link">Контакты</a>
+                </li>
+                <li class="header__item">
+                    <a href="#section-clients" class="header__link">Отзывы</a>
+                </li>
+                <div v-if="session" class="header__item">
+                    <a v-for="user in users" :key="user.id" href="/admin.php" class="header__link">
+                        Вход: {{ user.firstname }}
+                    </a>
+                </div>
+                <div v-else class="header__item">
+                    <a @click="toggleLogAdmin" class="header__link">Администрирование</a>
+                </div>
+            </ul>
         </div>
 
         <div v-else>
-            <a @click="toggleLogAdmin" class="header__link">Администрирование</a>
+            <ul class="header__list">
+                <li class="header__item">
+                    <div v-for="user in users" :key="user.id" class="header__link_none">
+                        Администратор: {{ user.firstname }} {{ user.lastname }}
+                    </div>
+                </li>
+                <li class="header__item">
+                    <a href="index.php" class="header__link">На главную страницу</a>
+                </li>
+                <li class="header__item">
+                    <a href="php/exit.php" class="header__link">Выйти из аккаунта</a>
+                </li>
+            </ul>
         </div>
 
         <div v-if="isShowLog" class="log case">
@@ -45,7 +76,7 @@
 
 export default {
     name: "Admin",
-    props: ['users', 'session'],
+    props: ['users', 'session', 'url'],
     data() {
         return {
             login: '',
@@ -98,7 +129,7 @@ export default {
             params.set('login', this.login);
             params.set('password', this.password);
 
-            let responce =  await fetch('php/check-log.php', {
+            let responce = await fetch('php/check-log.php', {
                 method: 'POST',
                 body: params
             });
